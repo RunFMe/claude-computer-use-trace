@@ -17,12 +17,12 @@ None of the 47 tools is a computer-use tool. Their names appear only in a list o
 
 ### Comments
 
-- `safeguards` Anthropic checks each tool call the model makes before the harness runs it
-- `system` Same system prompt in every request, with nothing about computer use
+- `safeguards` Anthropic checks the model's tool calls; the response returns a verdict per call, for every call except ToolSearch in this session
+- `system` System prompt: the same in every request, with nothing about computer use
 - `tools` No computer-use tools yet
 - `messages[0]` Harness adds three reminders before the user's request
 - `messages[0].content[3]` User asks for a calculation in the Calculator app
-- `messages[1]` System message with descriptions of the MCP servers, one of which is the computer-use server
+- `messages[1]` Mid-conversation system message with descriptions of the MCP servers, one of which is the computer-use server
 
 ### More: Why the tools are deferred
 
@@ -85,7 +85,7 @@ Claude calls `app_screenshot`. The result has three blocks: a 230×461 JPEG, a l
 
 ### More: Image size and coordinates
 
-The server scales each capture down to fit about 1,568 image tokens (28-pixel tiles, at most 1,568 pixels on the long side). Calculator's window fits at full size. Coordinates in the element list and in Claude's clicks use this image's pixels. If Claude requests a smaller image, the result states the original coordinate frame: `0.5-scale view; coordinate frame: 230x461`.
+The image is Calculator's window at 230×461 pixels. The boxes in the element list and the coordinates in Claude's clicks use this image's pixels: element [14] has its corner at (64, 294) and a size of 48×48, so its centre is (88, 318).
 
 ## Call 6 · Batch of seven clicks · Batch
 
@@ -125,11 +125,11 @@ Claude calls `app_release`, and the result is "All app locks released."
 
 ## Call 9 · Final reply · Reply
 
-Claude calls `wrap_up`, a tool the desktop app uses to show a summary box under the chat, and the result tells Claude to write its closing message. The reply to this request is text with `stop_reason: "end_turn"`, so Claude Code sends no further request. The last request contained 18 messages and both screenshots, about 108k input tokens. From call 3 on, all but a few dozen to about two thousand tokens of each request were read from the **prompt cache**.
+Claude calls `wrap_up`, a desktop-app tool that can show a next-step box under the chat. Nothing was pending, so the result says no box is drawn and tells Claude to write its closing message. The reply to this request is text with `stop_reason: "end_turn"`, so Claude Code sends no further request. The last request contained 18 messages and both screenshots, about 108k input tokens. From call 3 on, all but a few dozen to about two thousand tokens of each request were read from the **prompt cache**.
 
 ### Comments
 
-- `messages[16].content[0]` Model shows a summary box in the desktop app
+- `messages[16].content[0]` Model sends a recap to the desktop app; with nothing pending, no box is drawn
 - `messages[17].content[0]` Harness tells the model to write its closing message
 - `response.content[0]` Model's final answer to the user
 - `response.stop_reason` No tool calls, so the loop ends

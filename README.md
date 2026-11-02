@@ -89,4 +89,4 @@ The copy shares `~/.claude` with the installed app's Claude Code; quit it when y
 
 Removed from the log: session setup (`initialize`, `mcp_set_servers` and their responses), all other MCP servers' traffic, installed and running app lists (replaced by their length), every app name other than Calculator and Claude, paths, emails and UUIDs. The image data in screenshot results was shortened by the logger when it was written.
 
-In run 2, the `app_click` on 5 took 116 ms from Claude Code's `tools/call` to the result, 43 ms of it in `appScoped.probe`; the sequence of native calls is the same as in run 1 (154 ms and 77 ms).
+In run 2, the `app_click` on 5 took 117 ms from Claude Code's `tools/call` to the result, 43 ms of it in `appScoped.probe`, and the `app_batch` took 685 ms; these are the timings quoted in the post.
