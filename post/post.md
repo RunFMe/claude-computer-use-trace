@@ -18,7 +18,7 @@ I noticed that many people, me included, use AI agents without understanding how
 
 First, let's set the stage: here are the components we will see. The **Claude desktop app** runs **Claude Code** (the `claude` CLI) as a separate process, and Claude Code sends the requests to the **Anthropic API**. Inside the desktop app runs an **MCP server** called **`computer-use`**. It sits between the model and macOS: it takes screenshots and presses buttons using macOS's old accessibility features.
 
-When the model decides to use the computer, it calls the MCP server for a **screenshot** of an app. The **tool result** contains the image and a enumerated **clickable element list**: the buttons and fields that the **macOS accessibility API** reports for that window. To click, the model calls another tool from the same MCP server with either a number from the list or a pixel coordinate, and the tool result is one line of text that names the element that was pressed.
+When the model decides to use the computer, it calls the MCP server for a **screenshot** of an app. The **tool result** contains the image and an enumerated **clickable element list**: the buttons and fields that the **macOS accessibility API** reports for that window. To click, the model calls another tool from the same MCP server with either a number from the list or a pixel coordinate, and the tool result is one line of text that names the element that was pressed.
 
 ::: figure core-figure
 One step from the logged session. The boxes are the element list drawn onto the image. Claude clicked at (88, 318), the centre of element [14]; the server found the button at that point and pressed it through the macOS accessibility API.
