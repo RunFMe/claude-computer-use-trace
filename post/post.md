@@ -2,7 +2,7 @@
 title: What Claude sees when it uses your Mac
 page_title: What Claude Sees
 dek: Learning how to add computer use to my own LLM harness
-meta: November 2026 · Claude desktop app 4.4212 · Claude Code 2.1.309 · macOS 27
+meta: November 2026
 ---
 
 <!--
@@ -64,5 +64,5 @@ The viewer shows the logged requests with my personal setup removed: my own MCP 
 The scripts and the captured data are in [the GitHub repository](https://github.com/RunFMe/claude-computer-use-trace): [patching and re-signing the copy](https://github.com/RunFMe/claude-computer-use-trace/blob/main/capture/build_cutrace.py), [the logging proxy](https://github.com/RunFMe/claude-computer-use-trace/blob/main/capture/logproxy.py) and [building the viewer data](https://github.com/RunFMe/claude-computer-use-trace/blob/main/capture/make_scaffold.py).
 :::
 
-Logged on November 1, 2026. The viewer's data is the real request log of one session, about 400 KB of JSON.
+Logged on November 1, 2026, with Claude desktop app 4.4212, Claude Code 2.1.309 and macOS 27. The viewer's data is the real request log of one session, about 400 KB of JSON.
 {: .foot}
