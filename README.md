@@ -26,6 +26,8 @@ uv run --with markdown post/build.py --watch
 
 Edit `post/post.md` or `post/notes.md` and save; the site in `docs/` is rebuilt on every save. Serve `docs/` (for example `python3 -m http.server -d docs 8770`) and open the page with `?live` to reload it automatically after each build.
 
+To publish, run `post/publish.sh "Commit message"`: it rebuilds `docs/`, commits everything and pushes, and GitHub Pages serves the new version about a minute later. With `BLOCKLIST=<file of private terms>` set, it refuses to push when a changed file contains one of them.
+
 Markers in `post.md`:
 
 - `::: figure core-figure` … `:::` and `::: figure process-diagram` … `:::` place the figures; the text inside is the caption.
