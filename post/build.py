@@ -120,6 +120,7 @@ if (new URLSearchParams(location.search).has("live")) setInterval(() => fetch("b
     for f in ("scaffold.js", "scaffold.css"):
         shutil.copyfile(POST / "viewer" / f, DOCS / f)
     (DOCS / "build-id.txt").write_text(stamp)
+    (DOCS / ".nojekyll").write_text("")  # GitHub Pages serves docs/ as is
     print(time.strftime("%H:%M:%S"), "built docs/index.html")
 
 
