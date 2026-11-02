@@ -53,13 +53,13 @@ details.appendix p,details.appendix li{font-size:16px}
 .foot{margin-top:3em;font:13px -apple-system,sans-serif;color:var(--muted)}
 @media (max-width:640px){body{font-size:17px}h1{font-size:1.8rem}.fig1 .f1{flex-direction:column}.shotwrap,.shotwrap img,.shotwrap svg{width:200px;height:401px}.fig2{overflow-x:auto}.fig2 svg{min-width:600px}}
 </style>
-<link rel="stylesheet" href="scaffold.css?v=1793648130">
+<link rel="stylesheet" href="scaffold.css?v=1793648276">
 </head>
 <body>
 <main>
 
 <h1>What Claude sees when it uses your Mac</h1>
-<p class="dek">A computer-use session in the Claude desktop app, logged request by request: what the model receives, what it sends back, and which process presses the button.</p>
+<p class="dek">Learning how to add computer use to my own LLM harness</p>
 <p class="meta">November 2026 · Claude desktop app 4.4212 · Claude Code 2.1.309 · macOS 27</p>
 
 <p>I noticed that many people, me included, use AI agents without understanding how modern <strong>harnesses</strong> handle magic capabilities such as <strong>computer use</strong> or orchestrating subagents. Most people who work with AI know the basic <strong>ReAct loop</strong> behind an agent: the model calls a tool, reads the result and decides on the next call. Fewer know how modern harnesses build stuff on top of that loop. To investigate computer use, I logged one session in the Claude desktop app and analyzed it for you. By the end of the article, you will know how computer use works and how Claude's scaffolding works.</p>
@@ -148,8 +148,8 @@ details.appendix p,details.appendix li{font-size:16px}
 </details>
 <p class="foot">Logged on November 1, 2026. The viewer's data is the real request log of one session, about 400 KB of JSON.</p>
 </main>
-<script>window.BUILD = "1793648130";</script>
-<script src="scaffold.js?v=1793648130"></script>
+<script>window.BUILD = "1793648276";</script>
+<script src="scaffold.js?v=1793648276"></script>
 <script>
 if (new URLSearchParams(location.search).has("live")) setInterval(() => fetch("build-id.txt", {cache: "no-store"}).then(r => r.text()).then(t => { if (t.trim() !== window.BUILD) location.reload(); }).catch(() => {}), 1000);
 </script>

@@ -1,7 +1,7 @@
 ---
 title: What Claude sees when it uses your Mac
 page_title: What Claude Sees
-dek: A computer-use session in the Claude desktop app, logged request by request: what the model receives, what it sends back, and which process presses the button.
+dek: Learning how to add computer use to my own LLM harness
 meta: November 2026 · Claude desktop app 4.4212 · Claude Code 2.1.309 · macOS 27
 ---
 
