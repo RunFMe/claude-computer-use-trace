@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What Claude Sees</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--muted:#6b6a65;--rule:#e4e1d8;--card:#fff;--code-bg:#f2f0e9;--accent:#b4532a;--api:#3b6ea8}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#171715;--fg:#ecebe6;--muted:#a3a29b;--rule:#34332f;--card:#1f1f1c;--code-bg:#25241f;--accent:#e08a5e;--api:#79a6db}}
+:root[data-theme="dark"]{--bg:#171715;--fg:#ecebe6;--muted:#a3a29b;--rule:#34332f;--card:#1f1f1c;--code-bg:#25241f;--accent:#e08a5e;--api:#79a6db}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:18px/1.65 Charter,"Iowan Old Style",Georgia,serif}
+main{max-width:720px;margin:0 auto;padding:56px 16px 120px}
+h1{font:700 2.25rem/1.15 -apple-system,"Helvetica Neue",Arial,sans-serif;letter-spacing:-.02em;margin:0 0 .35em}
+h2{font:700 1.45rem/1.25 -apple-system,"Helvetica Neue",Arial,sans-serif;margin:2.4em 0 .5em}
+p{margin:.8em 0}
+a{color:var(--accent)}
+.dek{color:var(--muted);font-size:1.12rem;margin:0 0 .6em}
+.meta{font:13px/1.4 -apple-system,sans-serif;color:var(--muted);margin-bottom:2.4em}
+code{font:.84em ui-monospace,"SF Mono",Menlo,monospace;background:var(--code-bg);padding:.08em .32em;border-radius:4px}
+figure{margin:1.8em 0}
+figcaption{font:14px/1.5 -apple-system,sans-serif;color:var(--muted);margin-top:.7em}
+pre{font:12.5px/1.55 ui-monospace,"SF Mono",Menlo,monospace}
+/* figure 1 */
+.fig1 .f1{display:flex;gap:22px;align-items:flex-start}
+.f1-col{flex:none}.f1-col.grow{flex:1;min-width:0}
+.f1-h{font:600 12px -apple-system,sans-serif;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin:0 0 6px}
+.f1-col.grow .f1-h:not(:first-child){margin-top:14px}
+.shotwrap{position:relative;width:230px;height:461px}
+.shotwrap img{display:block;width:230px;height:461px;border-radius:10px}
+.shotwrap svg{position:absolute;inset:0;width:230px;height:461px}
+.bx{fill:none;stroke:#4f9ad6;stroke-width:1.3;opacity:.85}.bx.hot{stroke:var(--accent);stroke-width:2.6;opacity:1}
+.bl{font:700 9px -apple-system,sans-serif;fill:#8cc4f0}.bl.hot{fill:var(--accent)}
+.tgt{fill:none;stroke:var(--accent);stroke-width:1.8}
+.axlist{margin:0;background:var(--code-bg);border-radius:8px;padding:8px 10px;white-space:pre-wrap;word-break:break-word;font-size:11.5px;line-height:1.5}
+.axlist .ln{color:var(--muted)}.axlist .ln.hot{color:var(--fg);font-weight:700;background:color-mix(in srgb,var(--accent) 16%,transparent);border-radius:3px}
+.io{margin:0;border-radius:8px;padding:8px 10px;white-space:pre-wrap;word-break:break-word;border:1px solid var(--rule)}
+.io.out{border-color:color-mix(in srgb,var(--accent) 50%,var(--rule))}
+/* figure 2 */
+.fig2 svg{width:100%;height:auto;display:block}
+.fig2 .box rect{fill:var(--card);stroke:var(--rule);stroke-width:1.5}
+.fig2 .box.app>rect:first-child{stroke:var(--muted)}
+.fig2 .inner{fill:var(--bg)!important;stroke:var(--rule)!important}.fig2 .inner.cu{stroke:var(--accent)!important;stroke-width:2!important}
+.fig2 text{text-anchor:middle;fill:var(--fg)}
+.fig2 .t1{font:600 14px -apple-system,sans-serif}.fig2 .t2{font:12px -apple-system,sans-serif;fill:var(--muted)}.fig2 .t3{font:600 12.5px -apple-system,sans-serif}.fig2 .t3.cu{fill:var(--accent)}
+.fig2 .ln{stroke:var(--muted);stroke-width:1.5;fill:none}.fig2 .ah{fill:var(--muted)}
+.fig2 .lab{text-anchor:start;font:12px -apple-system,sans-serif;fill:var(--fg)}.fig2 .lab.mid{text-anchor:middle;fill:var(--muted)}
+.fig2 .n{font-weight:700;fill:var(--accent)}
+details.appendix{margin:2.4em 0 0;border-top:1px solid var(--rule);padding-top:1em}
+details.appendix>summary{cursor:pointer;font:700 1.15rem -apple-system,sans-serif}
+details.appendix p,details.appendix li{font-size:16px}
+.foot{margin-top:3em;font:13px -apple-system,sans-serif;color:var(--muted)}
+@media (max-width:640px){body{font-size:17px}h1{font-size:1.8rem}.fig1 .f1{flex-direction:column}.shotwrap,.shotwrap img,.shotwrap svg{width:200px;height:401px}.fig2{overflow-x:auto}.fig2 svg{min-width:600px}}
+</style>
+<link rel="stylesheet" href="scaffold.css?v=1793632753">
+</head>
+<body>
+<main>
+
+<h1>What Claude sees when it uses your Mac</h1>
+<p class="dek">A computer-use session in the Claude desktop app, logged request by request: what the model receives, what it sends back, and which process presses the button.</p>
+<p class="meta">November 2026 · Claude desktop app 4.4212 · Claude Code 2.1.309 · macOS 27</p>
+
+<p>I noticed that many people, me included, use AI agents without understanding how modern <strong>harnesses</strong> handle more complicated work such as <strong>computer use</strong> or orchestrating subagents. Most people who work with AI know the basic <strong>ReAct loop</strong> behind an agent: the model calls a tool, reads the result and decides on the next call. Fewer know what the companies that build harnesses add on top of that loop. To see it for computer use, I logged one session in the Claude desktop app, request by request.</p>
+<p>First, the setup. The <strong>Claude desktop app</strong> runs <strong>Claude Code</strong> (the <code>claude</code> CLI) as a separate process, and Claude Code sends the requests to the <strong>Anthropic API</strong>. Inside the desktop app runs an <strong>MCP server</strong> called <strong><code>computer-use</code></strong>. It sits between the model and macOS: it takes screenshots and presses buttons.</p>
+<p>When the model decides to use the computer, it calls the MCP server for a <strong>screenshot</strong> of an app. The <strong>tool result</strong> contains the image and a numbered <strong>element list</strong>: the buttons and fields that the <strong>macOS accessibility API</strong> reports for that window. To click, the model calls another tool with either a number from the list or a pixel coordinate, and the tool result is one line of text that names the element that was pressed.</p>
+<figure class="fig1">
+  <div class="f1">
+    <div class="f1-col">
+      <div class="f1-h">Claude receives a screenshot…</div>
+      <div class="shotwrap"><img src="img/trace-shot-2.jpg" width="230" height="461" alt="Calculator, as Claude saw it">
+        <svg viewBox="0 0 230 461" aria-hidden="true"><rect x="2" y="108" width="34" height="31" rx="7" class="bx"/><text x="5" y="118" class="bl">0</text><rect x="188" y="99" width="33" height="13" rx="7" class="bx"/><text x="191" y="109" class="bl">2</text><rect x="177" y="162" width="43" height="13" rx="7" class="bx"/><text x="180" y="172" class="bl">4</text><rect x="10" y="186" width="48" height="48" rx="7" class="bx"/><text x="13" y="196" class="bl">5</text><rect x="64" y="186" width="48" height="48" rx="7" class="bx"/><text x="67" y="196" class="bl">6</text><rect x="118" y="186" width="48" height="48" rx="7" class="bx"/><text x="121" y="196" class="bl">7</text><rect x="172" y="186" width="48" height="48" rx="7" class="bx"/><text x="175" y="196" class="bl">8</text><rect x="10" y="240" width="48" height="48" rx="7" class="bx"/><text x="13" y="250" class="bl">9</text><rect x="64" y="240" width="48" height="48" rx="7" class="bx"/><text x="67" y="250" class="bl">10</text><rect x="118" y="240" width="48" height="48" rx="7" class="bx"/><text x="121" y="250" class="bl">11</text><rect x="172" y="240" width="48" height="48" rx="7" class="bx"/><text x="175" y="250" class="bl">12</text><rect x="10" y="294" width="48" height="48" rx="7" class="bx"/><text x="13" y="304" class="bl">13</text><rect x="64" y="294" width="48" height="48" rx="7" class="bx hot"/><text x="67" y="304" class="bl hot">14</text><rect x="118" y="294" width="48" height="48" rx="7" class="bx"/><text x="121" y="304" class="bl">15</text><rect x="172" y="294" width="48" height="48" rx="7" class="bx"/><text x="175" y="304" class="bl">16</text><circle cx="88" cy="318" r="5" class="tgt"/><line x1="88" y1="306" x2="88" y2="330" class="tgt"/><line x1="76" y1="318" x2="100" y2="318" class="tgt"/></svg></div>
+    </div>
+    <div class="f1-col grow">
+      <div class="f1-h">…and a numbered list of what is clickable on it</div>
+      <pre class="axlist"><span class="ln">[0] AXButton [2,108 34×31] "Swap Units"</span>
+<span class="ln">[2] AXButton [188,99 33×13] "Input Unit"</span>
+<span class="ln">[4] AXButton [177,162 43×13] "Result Unit"</span>
+<span class="ln">[5] AXButton [10,186 48×48] "Delete"</span>
+<span class="ln">[6] AXButton [64,186 48×48] "All Clear"</span>
+<span class="ln">[7] AXButton [118,186 48×48] "Per cent"</span>
+<span class="ln">[8] AXButton [172,186 48×48] "Divide"</span>
+<span class="ln">[9] AXButton [10,240 48×48] "7"</span>
+<span class="ln">[10] AXButton [64,240 48×48] "8"</span>
+<span class="ln">[11] AXButton [118,240 48×48] "9"</span>
+<span class="ln">[12] AXButton [172,240 48×48] "Multiply"</span>
+<span class="ln">[13] AXButton [10,294 48×48] "4"</span>
+<span class="ln hot">[14] AXButton [64,294 48×48] "5"</span>
+<span class="ln">[15] AXButton [118,294 48×48] "6"</span>
+<span class="ln">[16] AXButton [172,294 48×48] "Subtract"</span>
+…(31 elements total)</pre>
+      <div class="f1-h">Claude's tool call</div>
+      <pre class="io out">app_click(app: "com.apple.calculator", coordinate: [88, 318])</pre>
+      <div class="f1-h">The tool result</div>
+      <pre class="io in">ok (AXPress on AXButton '5' via AXWindow&gt;AXGroup&gt;AXSplitGroup&gt;AXGroup×2)</pre>
+    </div>
+  </div>
+  <figcaption>One step from the logged session. The boxes are the element list drawn onto the image. Claude clicked at (88, 318), the centre of element [14]; the server found the button at that point and pressed it through the macOS accessibility API.</figcaption>
+</figure>
+<p>Claude could have passed <code>element_index: 14</code> instead of a coordinate; the server would have used the same centre point. In both cases, for a standard control like this one, the server does not send a mouse event. It looks up the <strong>accessibility element</strong> at the point and asks macOS to perform its <strong>press action</strong>, so the tool result can name the button.</p>
+<p>The rest of the post has two parts. <strong>Part 1</strong> covers the <strong>scaffolding</strong>, meaning how the model sees the whole interaction, one API request at a time, and the <strong>batching</strong> of actions that let the model run eight actions in one tool call. <strong>Part 2</strong> covers how Claude Code, the API, the desktop app and the MCP server interact.</p>
+<h2 id="calls">1. The conversation, call by call</h2>
+<p>The model has no separate computer-use mode. Each step is one request to the <strong>Messages API</strong>, and the request contains the <strong>system prompt</strong>, the <strong>tool definitions</strong> and the whole conversation so far in a list called <strong><code>messages</code></strong>. Claude replies with <strong>tool calls</strong>, Claude Code runs them, and the results are added to <code>messages</code> as the next user message. The session took nine calls. For each call, the viewer below shows the request as the JSON object that was sent. The entries added since the previous call are open and highlighted: Claude's reply to the previous request in orange, and the messages that Claude Code added in blue. Read the highlighted comments from top to bottom; each one says what the part of the JSON next to it is. Long strings, the system prompt, the tool definitions and the earlier messages are folded to one line.</p>
+<div id="scaf" class="scaf bleed">
+  <div class="scaf-bar"><button class="prev" aria-label="Previous call">◀</button><div class="chips"></div><button class="next" aria-label="Next call">▶</button></div>
+  <div class="note"></div>
+  <div class="reqview"></div>
+  <div class="raw" hidden></div>
+</div>
+<p>All of the model's instructions for using the computer are text, in four places: a 6k-character section of computer-use instructions in the <strong>system message</strong>; the 12k-character <strong>skill</strong> that Claude loaded in call 1; the 27 <strong>tool definitions</strong> added in call 2, about 60k characters of descriptions and schemas; and the <strong>tool results</strong>, which include instructions such as "Use the app_* tools to act on it in the background".</p>
+<p>Each screenshot result contains both an image and the element list, and Claude used both. It read the label on the clear key from the image before planning its clicks. For buttons in the element list, it clicked the centre of the listed box; the list shows only the first 15 elements, so for 1, 2 and Equals it estimated the position from the grid in the image, for example (34, 375) for a button whose centre is (34, 372). After an action, Claude knows only what the tool result says. It read "84" from the screenshot taken after the batch of clicks; after the last click it had only the one-line result.</p>
+<h3 id="batching">Batching actions</h3>
+<p><strong><code>app_batch</code></strong> runs a list of actions inside one tool call. In call 5, Claude sent eight actions, seven clicks and a screenshot, as one <code>app_batch</code>, and the server returned all eight results and the new screenshot together 1.0 s later, less time than a person needs to click seven buttons. Sent one at a time, the same actions would have needed eight model calls, and a model call in this session took between 2.5 and 14 s, so the batch saved roughly half a minute. Batching works because the screenshot and the element list let Claude plan all the clicks in advance; it checked the outcome once, in the screenshot at the end of the batch.</p>
+<h2 id="runs">2. Where it runs</h2>
+<p>On the Mac, a click goes through two processes and one native library, and only Claude Code sends requests to the model.</p>
+<figure class="fig2">
+<svg viewBox="0 0 760 340" role="img" aria-label="Processes involved in one click and the messages between them">
+  <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ah"/></marker></defs>
+  <g class="box"><rect x="8" y="20" width="150" height="70" rx="10"/><text x="83" y="50" class="t1">Anthropic API</text><text x="83" y="70" class="t2">runs the model</text></g>
+  <g class="box"><rect x="8" y="170" width="150" height="90" rx="10"/><text x="83" y="200" class="t1">Claude Code</text><text x="83" y="220" class="t2">the claude process,</text><text x="83" y="236" class="t2">one per session</text></g>
+  <g class="box app"><rect x="232" y="140" width="290" height="150" rx="12"/><text x="377" y="164" class="t1">Claude desktop app</text><text x="377" y="181" class="t2">Electron main process</text>
+    <rect x="250" y="196" width="118" height="78" rx="8" class="inner"/><text x="309" y="226" class="t3">Agent SDK</text><text x="309" y="243" class="t2">reads the pipe</text>
+    <rect x="386" y="196" width="118" height="78" rx="8" class="inner cu"/><text x="445" y="222" class="t3 cu">computer-use</text><text x="445" y="238" class="t3 cu">MCP server</text><text x="445" y="255" class="t2">in-process</text></g>
+  <g class="box"><rect x="596" y="170" width="156" height="90" rx="10"/><text x="674" y="200" class="t1">computer_use.node</text><text x="674" y="220" class="t2">Swift library loaded</text><text x="674" y="236" class="t2">into the app</text></g>
+  <g class="box os"><rect x="596" y="20" width="156" height="70" rx="10"/><text x="674" y="50" class="t1">macOS</text><text x="674" y="70" class="t2">Accessibility API</text></g>
+  <path d="M83,90 V170" class="ln" marker-start="url(#ar)" marker-end="url(#ar)"/>
+  <text x="92" y="122" class="lab"><tspan class="n">1</tspan> tool_use: app_click</text><text x="92" y="138" class="lab"><tspan class="n">6</tspan> tool_result in the next call</text>
+  <path d="M158,215 H250" class="ln" marker-start="url(#ar)" marker-end="url(#ar)"/>
+  <text x="164" y="208" class="lab"><tspan class="n">2</tspan> stdout</text><text x="164" y="236" class="lab">stdin</text>
+  <path d="M368,235 H386" class="ln" marker-end="url(#ar)"/>
+  <text x="377" y="312" class="lab mid"><tspan class="n">3</tspan> the same JSON-RPC, as a function call</text>
+  <path d="M504,235 H596" class="ln" marker-start="url(#ar)" marker-end="url(#ar)"/>
+  <text x="522" y="224" class="lab"><tspan class="n">4</tspan> probe(…)</text>
+  <path d="M674,170 V90" class="ln" marker-start="url(#ar)" marker-end="url(#ar)"/>
+  <text x="684" y="122" class="lab"><tspan class="n">5</tspan> hit-test,</text><text x="684" y="138" class="lab">AXPress</text>
+</svg>
+<figcaption>Processes involved in one click. The model's tool call (1) goes to Claude Code, which forwards it to the desktop app as a line on its stdout (2). The app passes the same JSON-RPC message to its in-process computer-use server (3), which calls one function in the Swift library (4). That function finds the button through the accessibility API and presses it (5). The tool result is returned the same way and is included in Claude's next request (6).</figcaption>
+</figure>
+<p>The desktop app starts a <strong>Claude Code</strong> process for each session and talks to it over that process's <strong>stdin and stdout</strong>, one JSON object per line. Claude Code holds the conversation and the connection to the API. The <strong>computer-use MCP server</strong> is not a separate program: it runs inside the desktop app's own <strong>Electron main process</strong>, built with the Agent SDK's <code>createSdkMcpServer</code>, and it calls a Swift library, <strong><code>computer_use.node</code></strong>, that the app loads directly. When Claude's reply contains <code>app_click</code>, Claude Code writes the MCP request to its stdout inside a <strong>control message</strong>, and the app passes the same <strong>JSON-RPC</strong> object to the server in a function call.</p>
+<p>The server checks that Calculator is granted and that its window is available, then makes one native call, <strong><code>appScoped.probe</code></strong>, with the window id, the point (88, 318) and the action. In the library, the accessibility API returns the element at that point and the library performs the element's press action, so the mouse pointer does not move; the faint cursor shown over the app is drawn separately. The result is returned the same way and becomes the tool result in Claude's next request. In the logged run, 154 ms passed between Claude Code sending the request and receiving the result, 77 ms of it in the native call.</p>
+<p><strong>Permissions</strong> are checked in several places. The app pre-approves the computer-use tools for Claude Code, so there is no per-call prompt; the server checks its own <strong>per-app grants</strong> and limits each app by type: browsers can only be viewed, and terminals can be clicked but not typed into. Each API request also includes a server-side <strong>safety check</strong>, and its result for each tool call reaches Claude Code before Claude Code runs the call.</p>
+<details class="appendix">
+<summary>Appendix: how this was captured</summary>
+<p>The installed app can't be inspected directly. Its Electron build disables <code>RunAsNode</code>, <code>NODE_OPTIONS</code> and <code>--inspect</code>, and its code archive is integrity-checked. I made a copy of the app and added logging hooks to its JavaScript: on the Claude Code pipe, on the in-process MCP traffic, and on every call into the Swift library. I also pointed the copy's Claude Code at a local proxy that logs API traffic, then re-signed the copy ad hoc. Electron 44 checks the archive twice, against a hash in <code>Info.plist</code> and against a digest of that whole entry stored inside the Electron framework binary, so both had to be updated. The copy ran with its own profile, cloned from the login data of my normal one, and was launched from a terminal so that it inherited that terminal's Screen Recording and Accessibility permissions.</p>
+<p>The viewer shows the logged requests with my personal setup removed: my own MCP servers, skills and instructions, my list of installed apps and identifying paths. Everything that ships with Claude is left as it was, including the full computer-use instructions and tool definitions. Token counts are as measured, so they include the removed material.</p>
+<p>The scripts and the captured data are in <a href="https://github.com/RunFMe/claude-computer-use-trace">the GitHub repository</a>: <a href="https://github.com/RunFMe/claude-computer-use-trace/blob/main/capture/build_cutrace.py">patching and re-signing the copy</a>, <a href="https://github.com/RunFMe/claude-computer-use-trace/blob/main/capture/logproxy.py">the logging proxy</a> and <a href="https://github.com/RunFMe/claude-computer-use-trace/blob/main/capture/make_scaffold.py">building the viewer data</a>.</p>
+</details>
+<p class="foot">Logged on November 1, 2026. The viewer's data is the real request log of one session, about 400 KB of JSON.</p>
+</main>
+<script>window.BUILD = "1793632753";</script>
+<script src="scaffold.js?v=1793632753"></script>
+<script>
+if (new URLSearchParams(location.search).has("live")) setInterval(() => fetch("build-id.txt", {cache: "no-store"}).then(r => r.text()).then(t => { if (t.trim() !== window.BUILD) location.reload(); }).catch(() => {}), 1000);
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<figure class="fig1">
+  <div class="f1">
+    <div class="f1-col">
+      <div class="f1-h">Claude receives a screenshot…</div>
+      <div class="shotwrap"><img src="img/trace-shot-2.jpg" width="230" height="461" alt="Calculator, as Claude saw it">
+        <svg viewBox="0 0 230 461" aria-hidden="true"><rect x="2" y="108" width="34" height="31" rx="7" class="bx"/><text x="5" y="118" class="bl">0</text><rect x="188" y="99" width="33" height="13" rx="7" class="bx"/><text x="191" y="109" class="bl">2</text><rect x="177" y="162" width="43" height="13" rx="7" class="bx"/><text x="180" y="172" class="bl">4</text><rect x="10" y="186" width="48" height="48" rx="7" class="bx"/><text x="13" y="196" class="bl">5</text><rect x="64" y="186" width="48" height="48" rx="7" class="bx"/><text x="67" y="196" class="bl">6</text><rect x="118" y="186" width="48" height="48" rx="7" class="bx"/><text x="121" y="196" class="bl">7</text><rect x="172" y="186" width="48" height="48" rx="7" class="bx"/><text x="175" y="196" class="bl">8</text><rect x="10" y="240" width="48" height="48" rx="7" class="bx"/><text x="13" y="250" class="bl">9</text><rect x="64" y="240" width="48" height="48" rx="7" class="bx"/><text x="67" y="250" class="bl">10</text><rect x="118" y="240" width="48" height="48" rx="7" class="bx"/><text x="121" y="250" class="bl">11</text><rect x="172" y="240" width="48" height="48" rx="7" class="bx"/><text x="175" y="250" class="bl">12</text><rect x="10" y="294" width="48" height="48" rx="7" class="bx"/><text x="13" y="304" class="bl">13</text><rect x="64" y="294" width="48" height="48" rx="7" class="bx hot"/><text x="67" y="304" class="bl hot">14</text><rect x="118" y="294" width="48" height="48" rx="7" class="bx"/><text x="121" y="304" class="bl">15</text><rect x="172" y="294" width="48" height="48" rx="7" class="bx"/><text x="175" y="304" class="bl">16</text><circle cx="88" cy="318" r="5" class="tgt"/><line x1="88" y1="306" x2="88" y2="330" class="tgt"/><line x1="76" y1="318" x2="100" y2="318" class="tgt"/></svg></div>
+    </div>
+    <div class="f1-col grow">
+      <div class="f1-h">…and a numbered list of what is clickable on it</div>
+      <pre class="axlist"><span class="ln">[0] AXButton [2,108 34×31] "Swap Units"</span>
+<span class="ln">[2] AXButton [188,99 33×13] "Input Unit"</span>
+<span class="ln">[4] AXButton [177,162 43×13] "Result Unit"</span>
+<span class="ln">[5] AXButton [10,186 48×48] "Delete"</span>
+<span class="ln">[6] AXButton [64,186 48×48] "All Clear"</span>
+<span class="ln">[7] AXButton [118,186 48×48] "Per cent"</span>
+<span class="ln">[8] AXButton [172,186 48×48] "Divide"</span>
+<span class="ln">[9] AXButton [10,240 48×48] "7"</span>
+<span class="ln">[10] AXButton [64,240 48×48] "8"</span>
+<span class="ln">[11] AXButton [118,240 48×48] "9"</span>
+<span class="ln">[12] AXButton [172,240 48×48] "Multiply"</span>
+<span class="ln">[13] AXButton [10,294 48×48] "4"</span>
+<span class="ln hot">[14] AXButton [64,294 48×48] "5"</span>
+<span class="ln">[15] AXButton [118,294 48×48] "6"</span>
+<span class="ln">[16] AXButton [172,294 48×48] "Subtract"</span>
+…(31 elements total)</pre>
+      <div class="f1-h">Claude's tool call</div>
+      <pre class="io out">app_click(app: "com.apple.calculator", coordinate: [88, 318])</pre>
+      <div class="f1-h">The tool result</div>
+      <pre class="io in">ok (AXPress on AXButton '5' via AXWindow&gt;AXGroup&gt;AXSplitGroup&gt;AXGroup×2)</pre>
+    </div>
+  </div>
+  <figcaption>{{caption}}</figcaption>
+</figure>
