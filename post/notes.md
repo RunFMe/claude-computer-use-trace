@@ -11,7 +11,7 @@ Notes shown in the viewer, one per API call.
 
 ## Call 1 · Initial request · Start
 
-The first request already contains three **system** blocks, a system message and our own prompt, in which we ask Claude to do something with computer use.
+The first request already contains several **system** messages and our own user prompt where we ask to do something with computer use.
 The first message is the prompt, preceded by three **reminders** added by the harness: the user's email, commit attribution rules, and a note about the scratch folder.
 The second message has role **`system`** and is 34k characters long. It describes the environment and contains each MCP server's instructions, including a 6k-character section on computer use.
 
@@ -36,7 +36,7 @@ Now we see the regular **Claude API** loop: the model asks for tools to be run, 
 ### Comments
 
 - `tools` Harness adds the definitions of the computer-use tools
-- `messages[2].content[0]` Reasoning isn't in the log; the API returns only an encrypted signature, removed here
+- `messages[2].content[0]` Reasoning is excluded from the log since it's encrypted anyways
 - `messages[2].content[1]` Model creates a todo list that you see in the interface; the same tool updates the task status later
 - `messages[2].content[2]` Model asks to load the computer-use skill
 - `messages[2].content[3]` Model asks for the computer-use tool definitions
@@ -52,7 +52,7 @@ Once the model asks to load the deferred tools, the request's `tools` array has 
 
 ## Call 3 · Access granted · Access
 
-Claude's first real computer-use call is `request_access` for Calculator. The user sees an **approval dialog** as a result of this call. The result is essentially "all good, you may proceed", and the MCP server records the grant, so from now on requests for this app are not blocked.
+Claude's first real computer-use call is `request_access` for Calculator. The user sees an **approval dialog** as a result of this call. The result is plain "all good, you may proceed" and a mark somewhere in the harness that from now on the requests to this app will not be blocked.
 
 ### Comments
 
@@ -63,7 +63,7 @@ Claude's first real computer-use call is `request_access` for Calculator. The us
 
 ## Call 4 · open_application · Open
 
-Claude calls `open_application`. The result is again essentially "all good, it is already open".
+Claude calls `open_application`. The result is again plain "all good, it was opened already".
 
 ### Comments
 
